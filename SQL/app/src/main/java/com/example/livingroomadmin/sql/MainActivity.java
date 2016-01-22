@@ -35,16 +35,17 @@ public class MainActivity extends Activity implements OnClickListener {
         btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(this);
 
-        btn = (Button) findViewById(R.id.button2);
-        //btn2.setOnClickListener(this);
+        btn2 = (Button) findViewById(R.id.button2);
+        btn2.setOnClickListener(this);
 
 
         // создаем объект для создания и управления версиями БД
         dbHelper = new DBHelper(this);
 
-        Long d = System.currentTimeMillis();
-        String data =d.toString();
-        data =d.toString() +"\n" + data;
+        Date d = new Date();
+        data =d.toString();// +"\n" + data;
+
+         txt  = (TextView)findViewById(R.id.textView);
     }
 
 
@@ -77,14 +78,16 @@ public class MainActivity extends Activity implements OnClickListener {
 
                     // определяем номера столбцов по имени в выборке
                     int dataColIndex = c.getColumnIndex("data");
+                    String s="";
 
                     do {
                         // получаем значения по номерам столбцов и пишем все в лог
-                        String s =c.getString(dataColIndex);
-                       txt.setText(s);
+                        s +=c.getString(dataColIndex)+"\n";
+
                         // переход на следующую строку
                         // а если следующей нет (текущая - последняя), то false - выходим из цикла
                     } while (c.moveToNext());
+                    txt.setText(s);
                 } else
                     Log.d(LOG_TAG, "0 rows");
                 c.close();
